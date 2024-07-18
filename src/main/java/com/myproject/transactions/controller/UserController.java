@@ -2,6 +2,7 @@ package com.myproject.transactions.controller;
 
 import com.myproject.transactions.entity.UserEntity;
 import com.myproject.transactions.service.UserService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,10 @@ public class UserController {
     @PutMapping
     public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user) {
         return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserEntity> deleteUser(@PathVariable("id") Long id ) throws Exception {
+        return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.OK);
     }
 }

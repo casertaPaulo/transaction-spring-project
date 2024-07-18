@@ -30,4 +30,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public UserEntity deleteUser(Long id) throws Exception {
+        UserEntity user = userRepository.findUserById(id).orElseThrow(() -> new Exception("User not found!"));
+        userRepository.delete(user);
+        return user;
+    }
+
 }
