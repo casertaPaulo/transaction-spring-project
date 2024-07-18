@@ -22,4 +22,12 @@ public class UserService {
         return userRepository.findUserById(id).orElseThrow(() -> new Exception("User not found!"));
     }
 
+    public UserEntity createUser(UserEntity user) {
+        return userRepository.save(user);
+    }
+
+    public UserEntity updateUser(UserEntity user){
+        return userRepository.save(user);
+    }
+
 }

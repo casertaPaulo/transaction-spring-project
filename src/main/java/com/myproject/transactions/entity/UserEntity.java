@@ -1,11 +1,17 @@
 package com.myproject.transactions.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(of = "id")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity {
 
     @Id

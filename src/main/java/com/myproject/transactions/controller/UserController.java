@@ -5,11 +5,9 @@ import com.myproject.transactions.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 
 @RestController
@@ -27,5 +25,15 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserEntity> findUserById(@PathVariable("id") Long id) throws Exception {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.FOUND);
+    }
+
+    @PostMapping
+    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) {
+        return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity user) {
+        return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
     }
 }
