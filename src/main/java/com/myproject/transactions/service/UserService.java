@@ -1,6 +1,8 @@
 package com.myproject.transactions.service;
 
 import com.myproject.transactions.entity.UserEntity;
+import com.myproject.transactions.entity.UserTransactionType;
+import com.myproject.transactions.entity.UserType;
 import com.myproject.transactions.exception.DocumentAlreadyExistException;
 import com.myproject.transactions.exception.EmailAlreadyExistException;
 import com.myproject.transactions.exception.UserNotFoundException;
@@ -23,6 +25,10 @@ public class UserService {
 
     public UserEntity getUserById(Long id) throws Exception {
         return userRepository.findUserById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    public UserEntity getUserById(Long id, UserTransactionType userType) {
+        return userRepository.findUserById(id).orElseThrow(() -> new UserNotFoundException(userType));
     }
 
     public UserEntity createUser(UserEntity user) {
