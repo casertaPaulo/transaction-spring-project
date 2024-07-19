@@ -24,7 +24,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         userRepository.save(new UserEntity(
                 "Paulo Henrique", "48902517829", "paulo@gmail.com", "123",
-                new BigDecimal(10), UserType.COMMON));
+                new BigDecimal(2000), UserType.COMMON));
 
         userRepository.save(new UserEntity(
                 "Caleb Henrique", "58902517829", "caleb@gmail.com", "123",
