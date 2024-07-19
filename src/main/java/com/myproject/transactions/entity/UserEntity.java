@@ -38,6 +38,14 @@ public class UserEntity {
     @Column(nullable = false)
     private UserType userType;
 
+    public UserEntity(String fullName, String document, String email, String password, BigDecimal balance, UserType userType) {
+        this.fullName = fullName;
+        this.document = document;
+        this.email = email;
+        this.password = password;
+        this.balance = balance;
+        this.userType = userType;
+    }
 
     @Override
     public boolean equals(Object o) {
