@@ -1,5 +1,6 @@
 package com.myproject.transactions.entity;
 
+import com.myproject.transactions.entity.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;
 

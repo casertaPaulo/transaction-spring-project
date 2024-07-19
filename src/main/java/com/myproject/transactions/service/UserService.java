@@ -1,7 +1,7 @@
 package com.myproject.transactions.service;
 
 import com.myproject.transactions.entity.UserEntity;
-import com.myproject.transactions.entity.UserTransactionType;
+import com.myproject.transactions.entity.enums.UserTransactionType;
 import com.myproject.transactions.exception.user.DocumentAlreadyExistException;
 import com.myproject.transactions.exception.user.EmailAlreadyExistException;
 import com.myproject.transactions.exception.user.UserNotFoundException;

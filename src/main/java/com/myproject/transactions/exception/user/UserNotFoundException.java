@@ -1,6 +1,6 @@
 package com.myproject.transactions.exception.user;
 
-import com.myproject.transactions.entity.UserTransactionType;
+import com.myproject.transactions.entity.enums.UserTransactionType;
 
 public class UserNotFoundException extends RuntimeException {
 
