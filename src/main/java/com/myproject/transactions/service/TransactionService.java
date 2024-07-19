@@ -6,6 +6,7 @@ import com.myproject.transactions.entity.UserEntity;
 import com.myproject.transactions.entity.UserTransactionType;
 import com.myproject.transactions.entity.UserType;
 import com.myproject.transactions.exception.InsufficientBalance;
+import com.myproject.transactions.exception.SameUserTransactionException;
 import com.myproject.transactions.repository.TransactionRepository;
 import com.myproject.transactions.exception.UserTypeInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.math.BigDecimal;
-import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 @Service
@@ -43,6 +43,7 @@ public class TransactionService {
     private void validateTransaction(UserEntity sender, UserEntity receiver, BigDecimal amount) {
         if (sender.getUserType().equals(UserType.SELLER)) throw new UserTypeInvalidException();
         if (sender.getBalance().compareTo(amount) < 0) throw new InsufficientBalance();
+        if (sender.equals(receiver)) throw new SameUserTransactionException();
 
         doTransaction(sender, receiver, amount);
     }
