@@ -4,6 +4,8 @@ import com.myproject.transactions.dto.AnnouncementDTO;
 import com.myproject.transactions.entity.AnnouncementEntity;
 import com.myproject.transactions.entity.ProductEntity;
 import com.myproject.transactions.entity.UserEntity;
+import com.myproject.transactions.entity.enums.UserType;
+import com.myproject.transactions.exception.announcement.SellerUserTypeException;
 import com.myproject.transactions.repository.AnnouncementRepository;
 import com.myproject.transactions.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,13 @@ public class AnnouncementService {
         UserEntity seller = userService.getUserById(announcementDTO.getSellerId());
         ProductEntity product = productService.findProductById(announcementDTO.getProductId());
 
+        validateAnnouncement(seller, product);
+
         return announcementRepository.save(new AnnouncementEntity(seller, product, LocalDateTime.now()));
+    }
+
+    private void validateAnnouncement(UserEntity seller, ProductEntity product) {
+        if (seller.getUserType() != UserType.SELLER) throw new SellerUserTypeException();
     }
 
 }
