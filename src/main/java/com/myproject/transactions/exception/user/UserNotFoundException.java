@@ -1,4 +1,4 @@
-package com.myproject.transactions.exception;
+package com.myproject.transactions.exception.user;
 
 import com.myproject.transactions.entity.UserTransactionType;
 

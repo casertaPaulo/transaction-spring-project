@@ -1,4 +1,4 @@
-package com.myproject.transactions.exception;
+package com.myproject.transactions.exception.transaction;
 
 public class UserTypeInvalidException extends RuntimeException{
     public UserTypeInvalidException() {

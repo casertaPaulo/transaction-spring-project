@@ -1,4 +1,4 @@
-package com.myproject.transactions.exception;
+package com.myproject.transactions.exception.user;
 
 public class DocumentAlreadyExistException extends RuntimeException {
     public DocumentAlreadyExistException() {
