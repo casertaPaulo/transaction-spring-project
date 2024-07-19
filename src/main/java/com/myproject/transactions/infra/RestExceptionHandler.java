@@ -1,6 +1,12 @@
 package com.myproject.transactions.infra;
 
-import com.myproject.transactions.exception.*;
+import com.myproject.transactions.exception.transaction.InsufficientBalance;
+import com.myproject.transactions.exception.transaction.InvalidAmountException;
+import com.myproject.transactions.exception.transaction.SameUserTransactionException;
+import com.myproject.transactions.exception.transaction.UserTypeInvalidException;
+import com.myproject.transactions.exception.user.DocumentAlreadyExistException;
+import com.myproject.transactions.exception.user.EmailAlreadyExistException;
+import com.myproject.transactions.exception.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -37,6 +43,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(SameUserTransactionException.class)
     private ResponseEntity<String> sameUserTransactionException(SameUserTransactionException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidAmountException.class)
+    private ResponseEntity<String> invalidAmountException(InvalidAmountException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 
