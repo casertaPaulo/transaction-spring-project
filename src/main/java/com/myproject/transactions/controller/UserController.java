@@ -1,9 +1,7 @@
 package com.myproject.transactions.controller;
 
 import com.myproject.transactions.entity.UserEntity;
-import com.myproject.transactions.exception.DocumentAlreadyExistException;
 import com.myproject.transactions.service.UserService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

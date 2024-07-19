@@ -2,10 +2,9 @@ package com.myproject.transactions.service;
 
 import com.myproject.transactions.entity.UserEntity;
 import com.myproject.transactions.entity.UserTransactionType;
-import com.myproject.transactions.entity.UserType;
-import com.myproject.transactions.exception.DocumentAlreadyExistException;
-import com.myproject.transactions.exception.EmailAlreadyExistException;
-import com.myproject.transactions.exception.UserNotFoundException;
+import com.myproject.transactions.exception.user.DocumentAlreadyExistException;
+import com.myproject.transactions.exception.user.EmailAlreadyExistException;
+import com.myproject.transactions.exception.user.UserNotFoundException;
 import com.myproject.transactions.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
