@@ -5,10 +5,11 @@ import com.myproject.transactions.entity.TransactionEntity;
 import com.myproject.transactions.entity.UserEntity;
 import com.myproject.transactions.entity.UserTransactionType;
 import com.myproject.transactions.entity.UserType;
-import com.myproject.transactions.exception.InsufficientBalance;
-import com.myproject.transactions.exception.SameUserTransactionException;
+import com.myproject.transactions.exception.transaction.InsufficientBalance;
+import com.myproject.transactions.exception.transaction.InvalidAmountException;
+import com.myproject.transactions.exception.transaction.SameUserTransactionException;
 import com.myproject.transactions.repository.TransactionRepository;
-import com.myproject.transactions.exception.UserTypeInvalidException;
+import com.myproject.transactions.exception.transaction.UserTypeInvalidException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,7 @@ public class TransactionService {
         if (sender.getUserType().equals(UserType.SELLER)) throw new UserTypeInvalidException();
         if (sender.getBalance().compareTo(amount) < 0) throw new InsufficientBalance();
         if (sender.equals(receiver)) throw new SameUserTransactionException();
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) throw new InvalidAmountException();
 
         doTransaction(sender, receiver, amount);
     }
