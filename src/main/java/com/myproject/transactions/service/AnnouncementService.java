@@ -5,6 +5,7 @@ import com.myproject.transactions.entity.AnnouncementEntity;
 import com.myproject.transactions.entity.ProductEntity;
 import com.myproject.transactions.entity.UserEntity;
 import com.myproject.transactions.entity.enums.UserType;
+import com.myproject.transactions.exception.announcement.AnnouncementNotFoundException;
 import com.myproject.transactions.exception.announcement.SellerUserTypeException;
 import com.myproject.transactions.repository.AnnouncementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class AnnouncementService {
     }
 
     public AnnouncementEntity getAnnouncementById(String id) {
-        return announcementRepository.findAnnouncementById(id).orElseThrow(() -> new RuntimeException("NOT EXISTS"));
+        return announcementRepository.findAnnouncementById(id).orElseThrow(() -> new AnnouncementNotFoundException(id));
     }
 
     public AnnouncementEntity createAnnouncement(AnnouncementDTO announcementDTO) throws Exception {
