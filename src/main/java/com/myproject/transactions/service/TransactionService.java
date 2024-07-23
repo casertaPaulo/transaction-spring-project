@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class TransactionService {
+public class TransactionService implements Validate<TransactionEntity> {
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -35,24 +35,27 @@ public class TransactionService {
         UserEntity sender = userService.getUserById(request.senderId(), UserTransactionType.SENDER);
         UserEntity receiver = userService.getUserById(request.receiverId(), UserTransactionType.RECEIVER);
 
+        TransactionEntity transaction = new TransactionEntity(sender, receiver, request.amount());
+
         // validate the transaction
-        validateTransaction(sender, receiver, request.amount());
+        validate(transaction);
 
         return transactionRepository.save(new TransactionEntity(sender, receiver, request.amount()));
     }
 
-    private void validateTransaction(UserEntity sender, UserEntity receiver, BigDecimal amount) {
-        if (sender.getUserType().equals(UserType.SELLER)) throw new UserTypeInvalidException();
-        if (sender.getBalance().compareTo(amount) < 0) throw new InsufficientBalanceException();
-        if (sender.equals(receiver)) throw new SameUserTransactionException();
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) throw new InvalidAmountException();
+    @Override
+    public void validate(TransactionEntity transaction) {
+        if (transaction.getSender().getUserType().equals(UserType.SELLER)) throw new UserTypeInvalidException();
+        if (transaction.getSender().getBalance().compareTo(transaction.getAmount()) < 0) throw new InsufficientBalanceException();
+        if (transaction.getSender().equals(transaction.getReceiver())) throw new SameUserTransactionException();
+        if (transaction.getAmount().compareTo(BigDecimal.ZERO) <= 0) throw new InvalidAmountException();
 
-        doTransaction(sender, receiver, amount);
+        doTransaction(transaction);
     }
 
-    private void doTransaction(UserEntity sender, UserEntity receiver, BigDecimal amount) {
-        sender.setBalance(sender.getBalance().subtract(amount));
-        receiver.setBalance(receiver.getBalance().add(amount));
+    private void doTransaction(TransactionEntity transaction) {
+        transaction.getSender().setBalance(transaction.getSender().getBalance().subtract(transaction.getAmount()));
+        transaction.getReceiver().setBalance(transaction.getReceiver().getBalance().add(transaction.getAmount()));
     }
 
 }

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class AnnouncementService {
+public class AnnouncementService implements Validate<AnnouncementEntity> {
 
     @Autowired
     private AnnouncementRepository announcementRepository;
@@ -38,13 +38,15 @@ public class AnnouncementService {
         UserEntity seller = userService.getUserById(requestAnnouncementDTO.sellerId());
         ProductEntity product = productService.findProductById(requestAnnouncementDTO.productId());
 
-        validateAnnouncement(seller);
+        AnnouncementEntity announcement = new AnnouncementEntity(seller, product, LocalDateTime.now());
 
-        return announcementRepository.save(new AnnouncementEntity(seller, product, LocalDateTime.now()));
+        validate(announcement);
+
+        return announcementRepository.save(announcement);
     }
 
-    private void validateAnnouncement(UserEntity seller) {
-        if (seller.getUserType() != UserType.SELLER) throw new SellerUserTypeException();
+    @Override
+    public void validate(AnnouncementEntity announcement) {
+        if (announcement.getSeller().getUserType() != UserType.SELLER) throw new SellerUserTypeException();
     }
-
 }

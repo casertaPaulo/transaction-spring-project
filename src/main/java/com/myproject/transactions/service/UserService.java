@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Service
-public class UserService {
+public class UserService implements Validate<UserEntity> {
 
     @Autowired
     private UserRepository userRepository;
@@ -31,11 +31,12 @@ public class UserService {
     }
 
     public UserEntity createUser(UserEntity user) {
-        validateUser(user);
+        validate(user);
         return userRepository.save(user);
     }
 
-    private void validateUser(UserEntity user)  {
+    @Override
+    public void validate(UserEntity user) {
         if (userRepository.existsByDocument(user.getDocument())) {
             throw new DocumentAlreadyExistException();
         }
