@@ -1,11 +1,8 @@
 package com.myproject.transactions.controller;
 
-import com.myproject.transactions.dto.AnnouncementDTO;
-import com.myproject.transactions.dto.OrderDTO;
+import com.myproject.transactions.dto.RequestAnnouncementDTO;
 import com.myproject.transactions.entity.AnnouncementEntity;
-import com.myproject.transactions.entity.OrderEntity;
 import com.myproject.transactions.service.AnnouncementService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +19,17 @@ public class AnnouncementController {
 
     @GetMapping
     public ResponseEntity<List<AnnouncementEntity>> listAllAnnouncements() {
-        return new ResponseEntity<>(announcementService.listAllAnnouncement(), HttpStatus.OK);
+        return ResponseEntity.ok(announcementService.listAllAnnouncement());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AnnouncementEntity> findAnnouncementById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(announcementService.getAnnouncementById(id), HttpStatus.FOUND);
+        return ResponseEntity.ok(announcementService.getAnnouncementById(id));
     }
 
-
-
     @PostMapping
-    public ResponseEntity<AnnouncementEntity> createTransaction(@RequestBody AnnouncementDTO announcementDTO) throws Exception {
-        return new ResponseEntity<>(announcementService.createAnnouncement(announcementDTO), HttpStatus.CREATED);
+    public ResponseEntity<AnnouncementEntity> createTransaction(@RequestBody RequestAnnouncementDTO requestAnnouncementDTO) throws Exception {
+        return ResponseEntity.status(HttpStatus.CREATED).body(announcementService.createAnnouncement(requestAnnouncementDTO));
     }
 
 }

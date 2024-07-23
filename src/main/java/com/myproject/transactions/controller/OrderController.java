@@ -1,9 +1,8 @@
 package com.myproject.transactions.controller;
 
-import com.myproject.transactions.dto.OrderDTO;
+import com.myproject.transactions.dto.RequestOrderDTO;
 import com.myproject.transactions.entity.OrderEntity;
 import com.myproject.transactions.service.OrderService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +19,11 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<OrderEntity>> listAllOrders() {
-        return new ResponseEntity<>(orderService.listAllOrders(), HttpStatus.OK);
+        return ResponseEntity.ok(orderService.listAllOrders());
     }
 
     @PostMapping
-    public ResponseEntity<OrderEntity> createOrder(@RequestBody OrderDTO orderDTO) throws Exception {
-        return new ResponseEntity<>(orderService.createOrder(orderDTO), HttpStatus.CREATED);
+    public ResponseEntity<OrderEntity> createOrder(@RequestBody RequestOrderDTO requestOrderDTO) throws Exception {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(requestOrderDTO));
     }
 }

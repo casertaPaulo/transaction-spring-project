@@ -1,6 +1,6 @@
 package com.myproject.transactions.controller;
 
-import com.myproject.transactions.dto.TransactionDTO;
+import com.myproject.transactions.dto.RequestTransactionDTO;
 import com.myproject.transactions.entity.TransactionEntity;
 import com.myproject.transactions.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ public class TransactionController {
 
     @GetMapping
     public ResponseEntity<List<TransactionEntity>> listAllTransaction() {
-        return new ResponseEntity<>(transactionService.listAllTransactions(), HttpStatus.OK);
+        return ResponseEntity.ok(transactionService.listAllTransactions());
     }
 
     @PostMapping
-    public ResponseEntity<TransactionEntity> createTransaction(@RequestBody TransactionDTO transactionDTO) throws Exception {
-        return new ResponseEntity<>(transactionService.createTransaction(transactionDTO), HttpStatus.CREATED);
+    public ResponseEntity<TransactionEntity> createTransaction(@RequestBody RequestTransactionDTO requestTransactionDTO) throws Exception {
+        return ResponseEntity.status(HttpStatus.CREATED).body(transactionService.createTransaction(requestTransactionDTO));
     }
 
 
