@@ -1,6 +1,6 @@
 package com.myproject.transactions.service;
 
-import com.myproject.transactions.dto.AnnouncementDTO;
+import com.myproject.transactions.dto.RequestAnnouncementDTO;
 import com.myproject.transactions.entity.AnnouncementEntity;
 import com.myproject.transactions.entity.ProductEntity;
 import com.myproject.transactions.entity.UserEntity;
@@ -34,9 +34,9 @@ public class AnnouncementService {
         return announcementRepository.findAnnouncementById(id).orElseThrow(() -> new AnnouncementNotFoundException(id));
     }
 
-    public AnnouncementEntity createAnnouncement(AnnouncementDTO announcementDTO) throws Exception {
-        UserEntity seller = userService.getUserById(announcementDTO.getSellerId());
-        ProductEntity product = productService.findProductById(announcementDTO.getProductId());
+    public AnnouncementEntity createAnnouncement(RequestAnnouncementDTO requestAnnouncementDTO) throws Exception {
+        UserEntity seller = userService.getUserById(requestAnnouncementDTO.sellerId());
+        ProductEntity product = productService.findProductById(requestAnnouncementDTO.productId());
 
         validateAnnouncement(seller);
 
