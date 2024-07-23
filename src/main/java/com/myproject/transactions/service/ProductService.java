@@ -1,6 +1,7 @@
 package com.myproject.transactions.service;
 
 import com.myproject.transactions.entity.ProductEntity;
+import com.myproject.transactions.exception.product.NonexistentProductException;
 import com.myproject.transactions.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class ProductService {
     }
 
     public ProductEntity findProductById(Long id) {
-        return productRepository.findProductById(id).orElseThrow();
+        return productRepository.findProductById(id).orElseThrow(() -> new NonexistentProductException(id));
     }
 
     public ProductEntity createProduct(ProductEntity product) {
