@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "users")
 @Table(name = "users")
 @EqualsAndHashCode(of = "id")
 @Getter
@@ -38,6 +40,10 @@ public class UserEntity {
     @Column(nullable = false)
     private UserType userType;
 
+    @JoinColumn(name = "order_id")
+    @OneToMany
+    private List<OrderEntity> orders = new ArrayList<>();
+
     public UserEntity(String fullName, String document, String email, String password, BigDecimal balance, UserType userType) {
         this.fullName = fullName;
         this.document = document;
@@ -47,16 +53,8 @@ public class UserEntity {
         this.userType = userType;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserEntity user = (UserEntity) o;
-        return Objects.equals(id, user.id);
+    public void addOrders(OrderEntity order) {
+        orders.add(order);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }
