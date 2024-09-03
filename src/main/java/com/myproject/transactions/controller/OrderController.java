@@ -22,6 +22,11 @@ public class OrderController {
         return ResponseEntity.ok(orderService.listAllOrders());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<List<OrderEntity>> listOrdersByUserID (@PathVariable("id") Long id) throws Exception {
+        return ResponseEntity.ok(orderService.listOrdersById(id));
+    }
+
     @PostMapping
     public ResponseEntity<OrderEntity> createOrder(@RequestBody RequestOrderDTO requestOrderDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(requestOrderDTO));

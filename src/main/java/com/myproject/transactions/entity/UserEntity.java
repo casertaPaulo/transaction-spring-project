@@ -40,9 +40,7 @@ public class UserEntity {
     @Column(nullable = false)
     private UserType userType;
 
-    @JoinColumn(name = "order_id")
-    @OneToMany
-    private List<OrderEntity> orders = new ArrayList<>();
+
 
     public UserEntity(String fullName, String document, String email, String password, BigDecimal balance, UserType userType) {
         this.fullName = fullName;
@@ -53,8 +51,5 @@ public class UserEntity {
         this.userType = userType;
     }
 
-    public void addOrders(OrderEntity order) {
-        orders.add(order);
-    }
 
 }

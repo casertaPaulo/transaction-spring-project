@@ -33,6 +33,11 @@ public class OrderService {
 
     }
 
+    public List<OrderEntity> listOrdersById(Long id) throws Exception {
+        UserEntity user = userService.getUserById(id);
+        return orderRepository.findOrderByBuyer(user).orElseThrow(() -> new RuntimeException("Erro"));
+    }
+
     public OrderEntity createOrder(RequestOrderDTO requestOrderDTO) throws Exception {
         // capturing the announcement (contains product and seller information)
         AnnouncementEntity announcement = announcementService.getAnnouncementById(requestOrderDTO.announcementId());
